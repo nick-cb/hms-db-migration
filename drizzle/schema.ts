@@ -11,7 +11,7 @@ export const admin = mysqlTable("admin", {
 	image: varchar("image", { length: 500 }),
 	gender: varchar("gender", { length: 50 }),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
-	createdAt: date("created_at", { mode: 'string' }).notNull(),
+	birthday: date("birthday", { mode: 'string' }).notNull(),
 },
 (table) => {
 	return {
