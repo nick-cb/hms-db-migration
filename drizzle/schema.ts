@@ -1,4 +1,4 @@
-import { mysqlTable, mysqlSchema, AnyMySqlColumn, primaryKey, int, varchar, date, bigint, double } from "drizzle-orm/mysql-core"
+import { mysqlTable, mysqlSchema, AnyMySqlColumn, primaryKey, int, varchar, date, bigint, double, foreignKey } from "drizzle-orm/mysql-core"
 import { sql } from "drizzle-orm"
 
 
@@ -21,7 +21,7 @@ export const admin = mysqlTable("admin", {
 
 export const appointment = mysqlTable("appointment", {
 	id: int("id").autoincrement().notNull(),
-	patientId: bigint("patient_id", { mode: "number" }),
+	patientId: int("patient_id"),
 	name: varchar("name", { length: 100 }).notNull(),
 	description: varchar("description", { length: 200 }).notNull(),
 	diagnosis: varchar("diagnosis", { length: 200 }),
@@ -33,13 +33,15 @@ export const appointment = mysqlTable("appointment", {
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
 	deletedAt: date("deleted_at", { mode: 'string' }),
 	status: varchar("status", { length: 50 }).notNull(),
-	doctorId: varchar("doctor_id", { length: 50 }).notNull(),
+	doctorId: int("doctor_id").notNull(),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
 	scheduledAt: date("scheduled_at", { mode: 'string' }).notNull(),
 },
 (table) => {
 	return {
 		appointmentIdPk: primaryKey({ columns: [table.id], name: "appointment_id_pk"}),
+    // patientIdFk: foreignKey({ columns: [table.patientId], foreignColumns: [patient.id], name: "patient_id_fk"}),
+    // doctorIdFk: foreignKey({ columns: [table.doctorId], foreignColumns: [patient.id], name: "doctor_id_fk"}),
 	}
 });
 
