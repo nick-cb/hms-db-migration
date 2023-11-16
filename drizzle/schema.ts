@@ -93,15 +93,15 @@ export const patient = mysqlTable("patient", {
 export const payment = mysqlTable("payment", {
 	id: int("id").autoincrement().notNull(),
 	patientId: int("patient_id"),
-	doctor: varchar("doctor", { length: 250 }),
+	doctorId: varchar("doctor_id", { length: 250 }),
 	totalDays: int("total_days"),
 	totalPrice: double("total_price"),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
-	date: date("date", { mode: 'string' }),
+	createdAt: date("created_at", { mode: 'string' }),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
-	dateCheckout: date("date_checkout", { mode: 'string' }),
+	checkoutAt: date("checkout_at", { mode: 'string' }),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
-	datePay: date("date_pay", { mode: 'string' }),
+	paidAt: date("paid_at", { mode: 'string' }),
 },
 (table) => {
 	return {
