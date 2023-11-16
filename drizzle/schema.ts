@@ -45,7 +45,6 @@ export const appointment = mysqlTable("appointment", {
 
 export const doctor = mysqlTable("doctor", {
 	id: int("id").autoincrement().notNull(),
-	doctorId: varchar("doctor_id", { length: 50 }).notNull(),
 	password: varchar("password", { length: 100 }).notNull(),
 	fullName: varchar("full_name", { length: 100 }).notNull(),
 	email: varchar("email", { length: 100 }).notNull(),
@@ -55,11 +54,11 @@ export const doctor = mysqlTable("doctor", {
 	address: varchar("address", { length: 200 }),
 	image: varchar("image", { length: 500 }),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
-	date: date("date", { mode: 'string' }).notNull(),
+	birthday: date("birthday", { mode: 'string' }).notNull(),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
-	modifyDate: date("modify_date", { mode: 'string' }),
+	modifiedAt: date("modified_at", { mode: 'string' }),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
-	deleteDate: date("delete_date", { mode: 'string' }),
+	deletedAt: date("deleted_at", { mode: 'string' }),
 	status: varchar("status", { length: 50 }).notNull(),
 },
 (table) => {
