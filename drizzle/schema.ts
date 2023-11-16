@@ -3,7 +3,7 @@ import { sql } from "drizzle-orm"
 
 
 export const admin = mysqlTable("admin", {
-	adminId: int("admin_id").autoincrement().notNull(),
+	id: int("id").autoincrement().notNull(),
 	email: varchar("email", { length: 100 }).notNull(),
 	username: varchar("username", { length: 100 }).notNull(),
 	password: varchar("password", { length: 50 }).notNull(),
@@ -11,11 +11,11 @@ export const admin = mysqlTable("admin", {
 	image: varchar("image", { length: 500 }),
 	gender: varchar("gender", { length: 50 }),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
-	date: date("date", { mode: 'string' }).notNull(),
+	createdAt: date("created_at", { mode: 'string' }).notNull(),
 },
 (table) => {
 	return {
-		adminAdminIdPk: primaryKey({ columns: [table.adminId], name: "admin_admin_id_pk"}),
+		adminAdminIdPk: primaryKey({ columns: [table.id], name: "admin_admin_id_pk"}),
 	}
 });
 
