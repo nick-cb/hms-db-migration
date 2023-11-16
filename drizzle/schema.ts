@@ -40,8 +40,8 @@ export const appointment = mysqlTable("appointment", {
 (table) => {
 	return {
 		appointmentIdPk: primaryKey({ columns: [table.id], name: "appointment_id_pk"}),
-    // patientIdFk: foreignKey({ columns: [table.patientId], foreignColumns: [patient.id], name: "patient_id_fk"}),
-    // doctorIdFk: foreignKey({ columns: [table.doctorId], foreignColumns: [patient.id], name: "doctor_id_fk"}),
+    patientIdFk: foreignKey({ columns: [table.patientId], foreignColumns: [patient.id], name: "patient_id_fk"}),
+    doctorIdFk: foreignKey({ columns: [table.doctorId], foreignColumns: [patient.id], name: "doctor_id_fk"}),
 	}
 });
 
