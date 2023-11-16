@@ -11,7 +11,7 @@ export const admin = mysqlTable("admin", {
 	image: varchar("image", { length: 500 }),
 	gender: varchar("gender", { length: 50 }),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
-	birthday: date("birthday", { mode: 'string' }).notNull(),
+	birthday: date("birthday", { mode: 'string' }),
 },
 (table) => {
 	return {
@@ -23,7 +23,7 @@ export const appointment = mysqlTable("appointment", {
 	id: int("id").autoincrement().notNull(),
 	patientId: int("patient_id").references(() => patient.id),
 	name: varchar("name", { length: 100 }).notNull(),
-	description: varchar("description", { length: 200 }).notNull(),
+	description: varchar("description", { length: 200 }),
 	diagnosis: varchar("diagnosis", { length: 200 }),
 	treatment: varchar("treatment", { length: 200 }),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
@@ -52,9 +52,9 @@ export const doctor = mysqlTable("doctor", {
 	moblieNumber: bigint("moblie_number", { mode: "number" }),
 	specialized: varchar("specialized", { length: 100 }),
 	address: varchar("address", { length: 200 }),
-	image: varchar("image", { length: 500 }),
+	image: varchar("image", { length: 500 }).notNull(),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
-	birthday: date("birthday", { mode: 'string' }).notNull(),
+	birthday: date("birthday", { mode: 'string' }),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
 	modifiedAt: date("modified_at", { mode: 'string' }),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
@@ -77,7 +77,7 @@ export const patient = mysqlTable("patient", {
 	address: varchar("address", { length: 200 }),
 	image: varchar("image", { length: 500 }),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
-	birthday: date("birthday", { mode: 'string' }).notNull(),
+	birthday: date("birthday", { mode: 'string' }),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
 	modifiedAt: date("modified_at", { mode: 'string' }),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
@@ -97,7 +97,7 @@ export const payment = mysqlTable("payment", {
 	totalDays: int("total_days"),
 	totalPrice: double("total_price"),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
-	createdAt: date("created_at", { mode: 'string' }),
+	createdAt: date("created_at", { mode: 'string' }).notNull(),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
 	checkoutAt: date("checkout_at", { mode: 'string' }),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
