@@ -45,6 +45,7 @@ export const appointment = mysqlTable("appointment", {
 
 export const doctor = mysqlTable("doctor", {
 	id: int("id").autoincrement().notNull(),
+  code: varchar("code", { length: 100 }).notNull(),
 	password: varchar("password", { length: 100 }).notNull(),
 	fullName: varchar("full_name", { length: 100 }).notNull(),
 	email: varchar("email", { length: 100 }).notNull(),
