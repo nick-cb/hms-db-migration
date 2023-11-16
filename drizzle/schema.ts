@@ -15,32 +15,27 @@ export const admin = mysqlTable("admin", {
 },
 (table) => {
 	return {
-		adminAdminIdPk: primaryKey({ columns: [table.id], name: "admin_admin_id_pk"}),
+		adminIdPk: primaryKey({ columns: [table.id], name: "admin_id_pk"}),
 	}
 });
 
 export const appointment = mysqlTable("appointment", {
 	id: int("id").autoincrement().notNull(),
-	appointmentId: int("appointment_id").notNull(),
 	patientId: bigint("patient_id", { mode: "number" }),
 	name: varchar("name", { length: 100 }).notNull(),
-	gender: varchar("gender", { length: 50 }).notNull(),
 	description: varchar("description", { length: 200 }).notNull(),
 	diagnosis: varchar("diagnosis", { length: 200 }),
 	treatment: varchar("treatment", { length: 200 }),
-	moblieNumber: bigint("moblie_number", { mode: "number" }).notNull(),
-	address: varchar("address", { length: 500 }).notNull(),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
-	date: date("date", { mode: 'string' }).notNull(),
+	createdAt: date("created_at", { mode: 'string' }).notNull(),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
-	dateModify: date("date_modify", { mode: 'string' }),
+	modifiedAt: date("modified_at", { mode: 'string' }),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
-	dateDelete: date("date_delete", { mode: 'string' }),
+	deletedAt: date("deleted_at", { mode: 'string' }),
 	status: varchar("status", { length: 50 }).notNull(),
-	doctor: varchar("doctor", { length: 50 }).notNull(),
-	specialized: varchar("specialized", { length: 100 }),
+	doctorId: varchar("doctor_id", { length: 50 }).notNull(),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
-	schedule: date("schedule", { mode: 'string' }).notNull(),
+	scheduledAt: date("scheduled_at", { mode: 'string' }).notNull(),
 },
 (table) => {
 	return {
