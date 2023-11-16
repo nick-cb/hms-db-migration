@@ -92,8 +92,8 @@ export const patient = mysqlTable("patient", {
 
 export const payment = mysqlTable("payment", {
 	id: int("id").autoincrement().notNull(),
-	patientId: int("patient_id"),
-  appointmentId: int("appointment_id"),
+	patientId: int("patient_id").notNull().references(() => patient.id),
+  appointmentId: int("appointment_id").notNull().references(() => appointment.id),
 	totalDays: int("total_days"),
 	totalPrice: double("total_price"),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
