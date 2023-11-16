@@ -69,26 +69,19 @@ export const doctor = mysqlTable("doctor", {
 
 export const patient = mysqlTable("patient", {
 	id: int("id").autoincrement().notNull(),
-	patientId: bigint("patient_id", { mode: "number" }).notNull(),
 	password: varchar("password", { length: 100 }).notNull(),
 	fullName: varchar("full_name", { length: 100 }),
 	moblieNumber: bigint("moblie_number", { mode: "number" }),
 	gender: varchar("gender", { length: 50 }),
 	address: varchar("address", { length: 200 }),
 	image: varchar("image", { length: 500 }),
-	description: varchar("description", { length: 200 }),
-	diagnosis: varchar("diagnosis", { length: 200 }),
-	treatment: varchar("treatment", { length: 200 }),
-	doctor: varchar("doctor", { length: 100 }),
-	specialized: varchar("specialized", { length: 100 }),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
-	date: date("date", { mode: 'string' }).notNull(),
+	birthday: date("birthday", { mode: 'string' }).notNull(),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
-	dateModify: date("date_modify", { mode: 'string' }),
+	modifiedAt: date("modified_at", { mode: 'string' }),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
-	dateDelete: date("date_delete", { mode: 'string' }),
+	deletedAt: date("deleted_at", { mode: 'string' }),
 	status: varchar("status", { length: 100 }).notNull(),
-	statusPay: varchar("status_pay", { length: 255 }),
 },
 (table) => {
 	return {
