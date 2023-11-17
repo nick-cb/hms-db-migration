@@ -2,23 +2,6 @@ import { mysqlTable, mysqlSchema, AnyMySqlColumn, primaryKey, int, varchar, date
 import { sql } from "drizzle-orm"
 
 
-export const manager = mysqlTable("manager", {
-	id: int("id").autoincrement().notNull(),
-	email: varchar("email", { length: 100 }).notNull(),
-	username: varchar("username", { length: 100 }).notNull(),
-	password: varchar("password", { length: 50 }).notNull(),
-	fullName: varchar("full_name", { length: 50 }),
-	image: varchar("image", { length: 500 }),
-	gender: varchar("gender", { length: 50 }),
-	// you can use { mode: 'date' }, if you want to have Date as type for this column
-	birthday: date("birthday", { mode: 'string' }),
-},
-(table) => {
-	return {
-		adminIdPk: primaryKey({ columns: [table.id], name: "admin_id_pk"}),
-	}
-});
-
 export const appointment = mysqlTable("appointment", {
 	id: int("id").autoincrement().notNull(),
 	name: varchar("name", { length: 100 }).notNull(),
@@ -42,15 +25,16 @@ export const appointment = mysqlTable("appointment", {
 });
 
 export const appointmentDetails = mysqlTable("appointment_details", {
-  id: int("id").autoincrement().notNull(),
-  appointmentId: int("appointment_id").notNull().references(() => appointment.id),
-  patientId: int("patient_id").notNull().references(() => patient.id),
-  doctorId: int("doctor_id").notNull().references(() => doctor.id),
-}, (table) => {
-  return {
-    appointmentDetailsIdPk: primaryKey({ columns: [table.id], name: "appointment_details_id_pk" }),
-  }
-})
+	id: int("id").autoincrement().notNull(),
+	appointmentId: int("appointment_id").notNull().references(() => appointment.id),
+	patientId: int("patient_id").notNull().references(() => patient.id),
+	doctorId: int("doctor_id").notNull().references(() => doctor.id),
+},
+(table) => {
+	return {
+		appointmentDetailsIdPk: primaryKey({ columns: [table.id], name: "appointment_details_id_pk"}),
+	}
+});
 
 export const doctor = mysqlTable("doctor", {
 	id: int("id").autoincrement().notNull(),
@@ -74,6 +58,23 @@ export const doctor = mysqlTable("doctor", {
 (table) => {
 	return {
 		doctorIdPk: primaryKey({ columns: [table.id], name: "doctor_id_pk"}),
+	}
+});
+
+export const manager = mysqlTable("manager", {
+	id: int("id").autoincrement().notNull(),
+	email: varchar("email", { length: 100 }).notNull(),
+	username: varchar("username", { length: 100 }).notNull(),
+	password: varchar("password", { length: 50 }).notNull(),
+	fullName: varchar("full_name", { length: 50 }),
+	image: varchar("image", { length: 500 }),
+	gender: varchar("gender", { length: 50 }),
+	// you can use { mode: 'date' }, if you want to have Date as type for this column
+	birthday: date("birthday", { mode: 'string' }),
+},
+(table) => {
+	return {
+		managerIdPk: primaryKey({ columns: [table.id], name: "manager_id_pk"}),
 	}
 });
 
