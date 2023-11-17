@@ -2,7 +2,7 @@ import { mysqlTable, mysqlSchema, AnyMySqlColumn, primaryKey, int, varchar, date
 import { sql } from "drizzle-orm"
 
 
-export const admin = mysqlTable("admin", {
+export const manager = mysqlTable("manager", {
 	id: int("id").autoincrement().notNull(),
 	email: varchar("email", { length: 100 }).notNull(),
 	username: varchar("username", { length: 100 }).notNull(),
@@ -21,7 +21,6 @@ export const admin = mysqlTable("admin", {
 
 export const appointment = mysqlTable("appointment", {
 	id: int("id").autoincrement().notNull(),
-	patientId: int("patient_id").references(() => patient.id),
 	name: varchar("name", { length: 100 }).notNull(),
 	description: varchar("description", { length: 200 }),
 	diagnosis: varchar("diagnosis", { length: 200 }),
@@ -33,7 +32,6 @@ export const appointment = mysqlTable("appointment", {
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
 	deletedAt: date("deleted_at", { mode: 'string' }),
 	status: varchar("status", { length: 50 }).notNull(),
-	doctorId: int("doctor_id").notNull().references(() => patient.id),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
 	scheduledAt: date("scheduled_at", { mode: 'string' }).notNull(),
 },
@@ -42,6 +40,17 @@ export const appointment = mysqlTable("appointment", {
 		appointmentIdPk: primaryKey({ columns: [table.id], name: "appointment_id_pk"}),
 	}
 });
+
+export const appointmentDetails = mysqlTable("appointment_details", {
+  id: int("id").autoincrement().notNull(),
+  appointmentId: int("appointment_id").notNull().references(() => appointment.id),
+  patientId: int("patient_id").notNull().references(() => patient.id),
+  doctorId: int("doctor_id").notNull().references(() => doctor.id),
+}, (table) => {
+  return {
+    appointmentDetailsIdPk: primaryKey({ columns: [table.id], name: "appointment_details_id_pk" }),
+  }
+})
 
 export const doctor = mysqlTable("doctor", {
 	id: int("id").autoincrement().notNull(),
@@ -93,7 +102,6 @@ export const patient = mysqlTable("patient", {
 export const payment = mysqlTable("payment", {
 	id: int("id").autoincrement().notNull(),
 	patientId: int("patient_id").notNull().references(() => patient.id),
-  appointmentId: int("appointment_id").notNull().references(() => appointment.id),
 	totalDays: int("total_days"),
 	totalPrice: double("total_price"),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
@@ -102,6 +110,7 @@ export const payment = mysqlTable("payment", {
 	checkoutAt: date("checkout_at", { mode: 'string' }),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
 	paidAt: date("paid_at", { mode: 'string' }),
+	appointmentId: int("appointment_id").notNull().references(() => appointment.id),
 },
 (table) => {
 	return {
