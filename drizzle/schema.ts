@@ -56,6 +56,7 @@ export const doctor = mysqlTable("doctor", {
 	code: varchar("code", { length: 100 }).notNull(),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
 	createdAt: date("created_at", { mode: 'string' }).default(sql`date_format(curdate(),_utf8mb4\'%Y,%m,%d\')`),
+  salary: double("salary").default(sql`0`),
 },
 (table) => {
 	return {
@@ -95,6 +96,8 @@ export const patient = mysqlTable("patient", {
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
 	deletedAt: date("deleted_at", { mode: 'string' }),
 	status: varchar("status", { length: 100 }).notNull(),
+	// you can use { mode: 'date' }, if you want to have Date as type for this column
+	createdAt: date("created_at", { mode: 'string' }).default(sql`date_format(curdate(),_utf8mb4\'%Y,%m,%d\')`),
 },
 (table) => {
 	return {
