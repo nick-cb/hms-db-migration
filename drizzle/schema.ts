@@ -1,15 +1,14 @@
-import { mysqlTable, mysqlSchema, AnyMySqlColumn, primaryKey, int, varchar, date, foreignKey, bigint, double } from "drizzle-orm/mysql-core"
+import { mysqlTable, mysqlSchema, AnyMySqlColumn, foreignKey, primaryKey, int, varchar, date, bigint, decimal, double } from "drizzle-orm/mysql-core"
 import { sql } from "drizzle-orm"
 
 
 export const appointment = mysqlTable("appointment", {
 	id: int("id").autoincrement().notNull(),
-	name: varchar("name", { length: 100 }).notNull(),
 	description: varchar("description", { length: 200 }),
 	diagnosis: varchar("diagnosis", { length: 200 }),
 	treatment: varchar("treatment", { length: 200 }),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
-	createdAt: date("created_at", { mode: 'string' }).notNull(),
+	createdAt: date("created_at", { mode: 'string' }).default(sql`date_format(curdate(),_utf8mb4\'%Y,%m,%d\')`).notNull(),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
 	modifiedAt: date("modified_at", { mode: 'string' }),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
@@ -17,6 +16,8 @@ export const appointment = mysqlTable("appointment", {
 	status: varchar("status", { length: 50 }).notNull(),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
 	scheduledAt: date("scheduled_at", { mode: 'string' }).notNull(),
+	patientId: int("patient_id").notNull().references(() => patient.id),
+	doctorId: int("doctor_id").notNull().references(() => doctor.id),
 },
 (table) => {
 	return {
@@ -42,7 +43,7 @@ export const doctor = mysqlTable("doctor", {
 	fullName: varchar("full_name", { length: 100 }).notNull(),
 	email: varchar("email", { length: 100 }).notNull(),
 	gender: varchar("gender", { length: 100 }),
-	moblieNumber: bigint("moblie_number", { mode: "number" }),
+	mobileNumber: bigint("mobile_number", { mode: "number" }),
 	specialized: varchar("specialized", { length: 100 }),
 	address: varchar("address", { length: 200 }),
 	image: varchar("image", { length: 500 }).notNull(),
@@ -56,7 +57,7 @@ export const doctor = mysqlTable("doctor", {
 	code: varchar("code", { length: 100 }).notNull(),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
 	createdAt: date("created_at", { mode: 'string' }).default(sql`date_format(curdate(),_utf8mb4\'%Y,%m,%d\')`),
-  salary: double("salary").default(sql`0`),
+	salary: decimal("salary", { precision: 10, scale: 0 }).default('0').notNull(),
 },
 (table) => {
 	return {
@@ -107,11 +108,10 @@ export const patient = mysqlTable("patient", {
 
 export const payment = mysqlTable("payment", {
 	id: int("id").autoincrement().notNull(),
-	patientId: int("patient_id").notNull().references(() => patient.id),
 	totalDays: int("total_days"),
 	totalPrice: double("total_price"),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
-	createdAt: date("created_at", { mode: 'string' }).notNull(),
+	createdAt: date("created_at", { mode: 'string' }).default(sql`date_format(curdate(),_utf8mb4\'%Y,%m,%d\')`).notNull(),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
 	checkoutAt: date("checkout_at", { mode: 'string' }),
 	// you can use { mode: 'date' }, if you want to have Date as type for this column
